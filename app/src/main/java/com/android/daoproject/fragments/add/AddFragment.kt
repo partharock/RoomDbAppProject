@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.os.Looper
 import android.os.Looper.loop
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -36,9 +39,9 @@ class AddFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-
-        val database = UserDatabase.getInstance(requireContext())
-        val repository = UserRepository(database.getDao())
+        setHasOptionsMenu(true)
+//        val database = UserDatabase.getInstance(requireContext())
+//        val repository = UserRepository(database.getDao())
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add, container, false)
@@ -50,6 +53,7 @@ class AddFragment : Fragment() {
         })
         return view
     }
+
 
     suspend fun addUser() {
         val firstName = view?.findViewById<EditText>(R.id.firstName)?.text.toString()

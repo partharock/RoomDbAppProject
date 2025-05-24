@@ -11,17 +11,35 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     var readAllData: LiveData<List<User>>
     var repository: UserRepository
+    var injectedRepository: Repository
 
     init {
         val dao = UserDatabase.getInstance(application).getDao()
         readAllData = dao.getAllUsers()
         repository = UserRepository(dao)
+        injectedRepository = Repository(dao)
     }
 
     fun addUser(user: User) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addUser(user)
+            injectedRepository.insertUser(user)
         }
+    }
+
+    fun updateUser(user: User) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateUser(user)
+        }
+    }
+
+    fun deleteUser(user: User) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteUser(user)
+        }
+    }
+
+    fun searchUser(searchQuery: String): LiveData<List<User>>? {
+        return repository.searchUser(searchQuery)
     }
 
 }

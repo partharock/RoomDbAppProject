@@ -1,10 +1,13 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-parcelize")
 //    id("org.jetbrains.kotlin.kapt")
     id("com.google.devtools.ksp") version "2.0.21-1.0.28"
-//    id("androidx.navigation.safeargs.kotlin")
+    id("androidx.navigation.safeargs.kotlin") // for Kotlin
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -39,6 +42,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
@@ -65,9 +69,17 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //dagger android
+    implementation("com.google.dagger:hilt-android:2.+")
+    ksp("com.google.dagger:hilt-android-compiler:2.+")
+
+    //dagger
+    implementation("com.google.dagger:dagger:2.+")
+    ksp("com.google.dagger:dagger-compiler:2.+")
+
     // Navigation Component
-    implementation("androidx.navigation:navigation-fragment-ktx:2.2.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.2.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.9.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.9.0")
 
     // Room components
     // ...
